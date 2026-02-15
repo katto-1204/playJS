@@ -287,7 +287,7 @@
     height: 100vh;
     background-color: #0F111A;
     color: #E0E0E0;
-    font-family: 'Fira Code', 'JetBrains Mono', monospace;
+    font-family: 'Inter', sans-serif;
   }
 
   .header {
@@ -332,7 +332,7 @@
     color: #FF6B35;
     border-radius: 4px;
     cursor: pointer;
-    font-family: 'Fira Code', 'JetBrains Mono', monospace;
+    font-family: 'Inter', sans-serif;
     font-size: 0.9rem;
     transition: all 0.2s;
   }

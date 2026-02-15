@@ -36,15 +36,18 @@
         EditorView.theme({
           '&': {
             height: '100%',
-            fontSize: '14px',
-            fontFamily: 'Fira Code, JetBrains Mono, monospace',
+            fontSize: '15px',
+            fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, sans-serif',
+            fontWeight: '800',
           },
           '.cm-scroller': {
             overflow: 'auto',
-            fontFamily: 'Fira Code, JetBrains Mono, monospace',
+            fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, sans-serif',
+            fontWeight: '800',
           },
           '.cm-content': {
-            fontFamily: 'Fira Code, JetBrains Mono, monospace',
+            fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, sans-serif',
+            fontWeight: '800',
           },
         }),
       ],

@@ -98,7 +98,7 @@
     background-color: transparent;
     border: none;
     color: #9CA3AF;
-    font-family: 'Fira Code', 'JetBrains Mono', monospace;
+    font-family: 'Inter', sans-serif;
     font-size: 0.9rem;
     font-weight: 500;
     cursor: pointer;

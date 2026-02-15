@@ -18,8 +18,8 @@
   function updatePreview() {
     if (!iframeElement) return;
 
-    const document = iframeElement.contentDocument;
-    if (!document) return;
+    const iframeDoc = iframeElement.contentDocument || iframeElement.contentWindow?.document;
+    if (!iframeDoc) return;
 
     const content = `
       <!DOCTYPE html>
@@ -85,9 +85,9 @@
       </html>
     `;
 
-    document.open();
-    document.write(content);
-    document.close();
+    iframeDoc.open();
+    iframeDoc.write(content);
+    iframeDoc.close();
   }
 
   export function refresh() {
@@ -106,7 +106,7 @@
     bind:this={iframeElement}
     class="preview-iframe"
     title="Code Preview"
-    sandbox="allow-scripts"
+    sandbox="allow-scripts allow-same-origin"
   ></iframe>
 </div>
 
@@ -132,7 +132,7 @@
   }
 
   .preview-title {
-    font-family: 'Fira Code', 'JetBrains Mono', monospace;
+    font-family: 'Inter', sans-serif;
     font-size: 0.9rem;
     font-weight: 600;
     color: #FF6B35;
