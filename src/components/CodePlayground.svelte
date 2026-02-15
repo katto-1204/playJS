@@ -88,7 +88,7 @@
   .tabs {
     display: flex;
     background-color: #1a1d29;
-    border-bottom: 2px solid #00FFA3;
+    border-bottom: 2px solid #FF6B35;
     padding: 0.5rem 1rem 0 1rem;
     gap: 0.5rem;
   }
@@ -108,13 +108,13 @@
   }
 
   .tab:hover {
-    background-color: rgba(0, 255, 163, 0.1);
+    background-color: rgba(255, 107, 53, 0.1);
     color: #E0E0E0;
   }
 
   .tab.active {
     background-color: #0F111A;
-    color: #00FFA3;
+    color: #FF6B35;
   }
 
   .tab.active::after {
@@ -124,7 +124,7 @@
     left: 0;
     right: 0;
     height: 2px;
-    background-color: #00FFA3;
+    background-color: #FF6B35;
   }
 
   .editor-area {

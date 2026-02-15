@@ -128,20 +128,20 @@
     align-items: center;
     padding: 0.75rem 1rem;
     background-color: #1a1d29;
-    border-bottom: 2px solid #00FFA3;
+    border-bottom: 2px solid #FF6B35;
   }
 
   .preview-title {
     font-family: 'Fira Code', 'JetBrains Mono', monospace;
     font-size: 0.9rem;
     font-weight: 600;
-    color: #00FFA3;
+    color: #FF6B35;
   }
 
   .refresh-btn {
     background-color: transparent;
-    border: 1px solid #00FFA3;
-    color: #00FFA3;
+    border: 1px solid #FF6B35;
+    color: #FF6B35;
     padding: 0.25rem 0.75rem;
     border-radius: 4px;
     cursor: pointer;
@@ -150,7 +150,7 @@
   }
 
   .refresh-btn:hover {
-    background-color: rgba(0, 255, 163, 0.1);
+    background-color: rgba(255, 107, 53, 0.1);
   }
 
   .preview-iframe {

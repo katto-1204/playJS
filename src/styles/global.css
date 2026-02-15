@@ -3,8 +3,8 @@
 :root {
   --background: #0F111A;
   --text: #E0E0E0;
-  --accent: #00FFA3;
-  --accent-glow: rgba(0, 255, 163, 0.3);
+  --accent: #FF6B35;
+  --accent-glow: rgba(255, 107, 53, 0.3);
   --terminal-bg: #0D0F16;
   --editor-bg: #12141D;
   --border: #1E2030;

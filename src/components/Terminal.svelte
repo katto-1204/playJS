@@ -22,12 +22,12 @@
       theme: {
         background: '#0D0F16',
         foreground: '#E0E0E0',
-        cursor: '#00FFA3',
-        cursorAccent: '#00FFA3',
-        selectionBackground: 'rgba(0, 255, 163, 0.3)',
+        cursor: '#FF6B35',
+        cursorAccent: '#FF6B35',
+        selectionBackground: 'rgba(255, 107, 53, 0.3)',
         black: '#0F111A',
         red: '#FF6B6B',
-        green: '#00FFA3',
+        green: '#FF6B35',
         yellow: '#FFD93D',
         blue: '#6BCF7F',
         magenta: '#C084FC',
@@ -35,7 +35,7 @@
         white: '#E0E0E0',
         brightBlack: '#4B5563',
         brightRed: '#FCA5A5',
-        brightGreen: '#6EE7B7',
+        brightGreen: '#FF8C42',
         brightYellow: '#FDE047',
         brightBlue: '#93C5FD',
         brightMagenta: '#E9D5FF',
@@ -51,13 +51,13 @@
     fitAddon.fit();
 
     // Welcome message
-    terminal.writeln('\x1b[1;32m╔══════════════════════════════════════════════════════════╗\x1b[0m');
-    terminal.writeln('\x1b[1;32m║                                                          ║\x1b[0m');
-    terminal.writeln('\x1b[1;32m║               Welcome to PlayJS Terminal!                ║\x1b[0m');
-    terminal.writeln('\x1b[1;32m║                                                          ║\x1b[0m');
-    terminal.writeln('\x1b[1;32m║           Type. Run. Experiment. In Browser.             ║\x1b[0m');
-    terminal.writeln('\x1b[1;32m║                                                          ║\x1b[0m');
-    terminal.writeln('\x1b[1;32m╚══════════════════════════════════════════════════════════╝\x1b[0m');
+    terminal.writeln('\x1b[1;33m╔══════════════════════════════════════════════════════════╗\x1b[0m');
+    terminal.writeln('\x1b[1;33m║                                                          ║\x1b[0m');
+    terminal.writeln('\x1b[1;33m║               Welcome to PlayJS Terminal!                ║\x1b[0m');
+    terminal.writeln('\x1b[1;33m║                                                          ║\x1b[0m');
+    terminal.writeln('\x1b[1;33m║           Type. Run. Experiment. In Browser.             ║\x1b[0m');
+    terminal.writeln('\x1b[1;33m║                                                          ║\x1b[0m');
+    terminal.writeln('\x1b[1;33m╚══════════════════════════════════════════════════════════╝\x1b[0m');
     terminal.writeln('');
     terminal.writeln('Type \x1b[1;36mhelp\x1b[0m to see available commands.');
     terminal.writeln('');
@@ -121,7 +121,7 @@
   });
 
   function prompt() {
-    terminal.write('\x1b[1;32m$\x1b[0m ');
+    terminal.write('\x1b[1;33m$\x1b[0m ');
   }
 
   function clearCurrentLine() {

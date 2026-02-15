@@ -25,7 +25,7 @@ export class CommandProcessor {
       handler: () => {
         let output = '\x1b[1;36mAvailable Commands:\x1b[0m\n\n';
         this.commands.forEach((cmd) => {
-          output += `  \x1b[1;32m${cmd.name}\x1b[0m`;
+          output += `  \x1b[1;33m${cmd.name}\x1b[0m`;
           if (cmd.usage) {
             output += ` ${cmd.usage}`;
           }

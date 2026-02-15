@@ -9,7 +9,7 @@
   let previewComponent: any;
 
   let htmlCode = '<!-- Write your HTML here -->\n<div class="container">\n  <h1>Hello, PlayJS!</h1>\n  <p>Start coding and see the magic happen!</p>\n</div>';
-  let cssCode = '/* Write your CSS here */\n.container {\n  text-align: center;\n  padding: 2rem;\n}\n\nh1 {\n  color: #00FFA3;\n  font-size: 2.5rem;\n}';
+  let cssCode = '/* Write your CSS here */\n.container {\n  text-align: center;\n  padding: 2rem;\n}\n\nh1 {\n  color: #FF6B35;\n  font-size: 2.5rem;\n}';
   let jsCode = '// Write your JavaScript here\nconsole.log("Welcome to PlayJS!");';
 
   const commandProcessor = new CommandProcessor();
@@ -29,7 +29,7 @@
             previewComponent.refresh();
           }
           return {
-            output: '\x1b[1;32m✓\x1b[0m Code executed successfully! Check the preview pane.',
+            output: '\x1b[1;33m✓\x1b[0m Code executed successfully! Check the preview pane.',
             success: true,
           };
         }
@@ -47,10 +47,10 @@
       handler: (args) => {
         if (args.length === 0 || args[0] === 'show') {
           showEditor = true;
-          return { output: '\x1b[1;32m✓\x1b[0m Editor opened', success: true };
+          return { output: '\x1b[1;33m✓\x1b[0m Editor opened', success: true };
         } else if (args[0] === 'hide') {
           showEditor = false;
-          return { output: '\x1b[1;32m✓\x1b[0m Editor closed', success: true };
+          return { output: '\x1b[1;33m✓\x1b[0m Editor closed', success: true };
         }
         return {
           output: '\x1b[1;33mUsage:\x1b[0m editor [show|hide]',
@@ -74,7 +74,7 @@
         const snippet = { html: htmlCode, css: cssCode, js: jsCode };
         localStorage.setItem(`playjs-snippet-${name}`, JSON.stringify(snippet));
         return {
-          output: `\x1b[1;32m✓\x1b[0m Snippet "${name}" saved successfully!`,
+          output: `\x1b[1;33m✓\x1b[0m Snippet "${name}" saved successfully!`,
           success: true,
         };
       },
@@ -105,7 +105,7 @@
           cssCode = snippet.css || '';
           jsCode = snippet.js || '';
           return {
-            output: `\x1b[1;32m✓\x1b[0m Snippet "${name}" loaded successfully!`,
+            output: `\x1b[1;33m✓\x1b[0m Snippet "${name}" loaded successfully!`,
             success: true,
           };
         } catch {
@@ -293,7 +293,7 @@
   .header {
     padding: 1rem 2rem;
     background: linear-gradient(135deg, #0F111A 0%, #1a1d29 100%);
-    border-bottom: 2px solid #00FFA3;
+    border-bottom: 2px solid #FF6B35;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
   }
 
@@ -304,7 +304,7 @@
   }
 
   .logo-bracket {
-    color: #00FFA3;
+    color: #FF6B35;
   }
 
   .logo-text {
@@ -328,8 +328,8 @@
     flex: 1;
     padding: 0.5rem 1rem;
     background-color: transparent;
-    border: 1px solid #00FFA3;
-    color: #00FFA3;
+    border: 1px solid #FF6B35;
+    color: #FF6B35;
     border-radius: 4px;
     cursor: pointer;
     font-family: 'Fira Code', 'JetBrains Mono', monospace;
@@ -338,11 +338,11 @@
   }
 
   .nav-btn:hover {
-    background-color: rgba(0, 255, 163, 0.1);
+    background-color: rgba(255, 107, 53, 0.1);
   }
 
   .nav-btn.active {
-    background-color: #00FFA3;
+    background-color: #FF6B35;
     color: #0F111A;
   }
 
@@ -374,7 +374,7 @@
 
   .divider {
     width: 2px;
-    background: linear-gradient(to bottom, transparent, #00FFA3, transparent);
+    background: linear-gradient(to bottom, transparent, #FF6B35, transparent);
     cursor: col-resize;
   }
 
@@ -417,7 +417,7 @@
   .footer {
     padding: 0.75rem 2rem;
     background-color: #1a1d29;
-    border-top: 1px solid #00FFA3;
+    border-top: 1px solid #FF6B35;
     font-size: 0.85rem;
   }
 
@@ -436,10 +436,10 @@
   kbd {
     padding: 0.125rem 0.375rem;
     background-color: #0F111A;
-    border: 1px solid #00FFA3;
+    border: 1px solid #FF6B35;
     border-radius: 3px;
     font-size: 0.75rem;
-    color: #00FFA3;
+    color: #FF6B35;
   }
 
   @media (max-width: 768px) {
