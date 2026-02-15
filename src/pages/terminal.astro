@@ -1,0 +1,8 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PlayJSApp from '../components/PlayJSApp.svelte';
+---
+
+<BaseLayout title="PlayJS - Browser Terminal + Code Playground">
+  <PlayJSApp client:only="svelte" />
+</BaseLayout>

@@ -1,0 +1,264 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="About PlayJS">
+  <div class="about-page">
+    <header class="page-header">
+      <a href="/" class="back-link">← Back to Home</a>
+      <h1>About PlayJS</h1>
+    </header>
+
+    <main class="content">
+      <section class="section">
+        <h2>What is PlayJS?</h2>
+        <p>
+          PlayJS is a browser-based development environment that combines the power of a terminal emulator
+          with a live code playground. It's designed for developers who want to quickly experiment with code,
+          test ideas, and build interactive projects without leaving their browser.
+        </p>
+      </section>
+
+      <section class="section">
+        <h2>Features</h2>
+        <ul class="feature-list">
+          <li>
+            <strong>Terminal Emulator:</strong> A fully functional terminal powered by xterm.js with command
+            history, custom commands, and a beautiful dark theme with neon green accents.
+          </li>
+          <li>
+            <strong>Code Playground:</strong> Write HTML, CSS, and JavaScript with syntax highlighting using
+            CodeMirror 6. See your changes reflected instantly in the live preview pane.
+          </li>
+          <li>
+            <strong>Command Integration:</strong> Control your code execution directly from the terminal using
+            commands like <code>run preview</code>, <code>save</code>, and <code>load</code>.
+          </li>
+          <li>
+            <strong>LocalStorage Persistence:</strong> Your code and command history are automatically saved
+            to your browser's localStorage, so you never lose your work.
+          </li>
+          <li>
+            <strong>Responsive Design:</strong> Works on desktop with a split-pane view and adapts to mobile
+            devices with a tabbed interface.
+          </li>
+        </ul>
+      </section>
+
+      <section class="section">
+        <h2>Available Commands</h2>
+        <div class="command-grid">
+          <div class="command-card">
+            <code class="command-name">help</code>
+            <p>Display all available commands and their descriptions.</p>
+          </div>
+          <div class="command-card">
+            <code class="command-name">clear</code>
+            <p>Clear the terminal screen.</p>
+          </div>
+          <div class="command-card">
+            <code class="command-name">echo &lt;text&gt;</code>
+            <p>Print text to the terminal.</p>
+          </div>
+          <div class="command-card">
+            <code class="command-name">date</code>
+            <p>Display the current date and time.</p>
+          </div>
+          <div class="command-card">
+            <code class="command-name">history</code>
+            <p>Show your command history.</p>
+          </div>
+          <div class="command-card">
+            <code class="command-name">run preview</code>
+            <p>Execute the code in the playground and update the preview.</p>
+          </div>
+          <div class="command-card">
+            <code class="command-name">save &lt;name&gt;</code>
+            <p>Save your current code with a custom name.</p>
+          </div>
+          <div class="command-card">
+            <code class="command-name">load &lt;name&gt;</code>
+            <p>Load a previously saved code snippet.</p>
+          </div>
+          <div class="command-card">
+            <code class="command-name">snippets</code>
+            <p>List all your saved code snippets.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>Tech Stack</h2>
+        <ul class="tech-list">
+          <li><strong>Astro:</strong> Static site generator for fast, optimized pages</li>
+          <li><strong>Svelte:</strong> Reactive UI framework for interactive components</li>
+          <li><strong>xterm.js:</strong> Full-featured terminal emulator for the browser</li>
+          <li><strong>CodeMirror 6:</strong> Modern code editor with syntax highlighting</li>
+          <li><strong>TypeScript:</strong> Type-safe development experience</li>
+        </ul>
+      </section>
+
+      <section class="section cta-section">
+        <h2>Ready to Start Coding?</h2>
+        <a href="/terminal" class="cta-button">Launch PlayJS Terminal</a>
+      </section>
+    </main>
+  </div>
+</BaseLayout>
+
+<style>
+  .about-page {
+    min-height: 100vh;
+    background-color: #0F111A;
+    color: #E0E0E0;
+    overflow-y: auto;
+  }
+
+  .page-header {
+    padding: 2rem;
+    background: linear-gradient(135deg, #0F111A 0%, #1a1d29 100%);
+    border-bottom: 2px solid #00FFA3;
+  }
+
+  .back-link {
+    display: inline-block;
+    color: #00FFA3;
+    text-decoration: none;
+    margin-bottom: 1rem;
+    transition: opacity 0.2s;
+  }
+
+  .back-link:hover {
+    opacity: 0.7;
+  }
+
+  .page-header h1 {
+    font-size: 2.5rem;
+    color: #00FFA3;
+    margin: 0;
+  }
+
+  .content {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 3rem 2rem;
+  }
+
+  .section {
+    margin-bottom: 3rem;
+  }
+
+  .section h2 {
+    color: #00FFA3;
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+  }
+
+  .section p {
+    color: #9CA3AF;
+    line-height: 1.8;
+    font-size: 1.05rem;
+  }
+
+  .feature-list,
+  .tech-list {
+    list-style: none;
+    padding: 0;
+  }
+
+  .feature-list li,
+  .tech-list li {
+    background-color: #1a1d29;
+    padding: 1rem 1.5rem;
+    margin-bottom: 1rem;
+    border-radius: 8px;
+    border-left: 4px solid #00FFA3;
+    color: #9CA3AF;
+    line-height: 1.6;
+  }
+
+  .feature-list strong,
+  .tech-list strong {
+    color: #00FFA3;
+  }
+
+  .feature-list code {
+    background-color: #0F111A;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    color: #00FFA3;
+    font-family: 'Fira Code', 'JetBrains Mono', monospace;
+  }
+
+  .command-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1rem;
+  }
+
+  .command-card {
+    background-color: #1a1d29;
+    padding: 1.5rem;
+    border-radius: 8px;
+    border: 2px solid transparent;
+    transition: all 0.3s;
+  }
+
+  .command-card:hover {
+    border-color: #00FFA3;
+    box-shadow: 0 0 20px rgba(0, 255, 163, 0.2);
+  }
+
+  .command-name {
+    display: block;
+    color: #00FFA3;
+    font-family: 'Fira Code', 'JetBrains Mono', monospace;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+
+  .command-card p {
+    margin: 0;
+    font-size: 0.95rem;
+  }
+
+  .cta-section {
+    text-align: center;
+    padding: 3rem 0;
+  }
+
+  .cta-button {
+    display: inline-block;
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    background-color: #00FFA3;
+    color: #0F111A;
+    border: 2px solid #00FFA3;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: all 0.3s;
+    font-family: 'Fira Code', 'JetBrains Mono', monospace;
+  }
+
+  .cta-button:hover {
+    background-color: transparent;
+    color: #00FFA3;
+    box-shadow: 0 0 20px rgba(0, 255, 163, 0.5);
+  }
+
+  @media (max-width: 768px) {
+    .page-header h1 {
+      font-size: 2rem;
+    }
+
+    .section h2 {
+      font-size: 1.5rem;
+    }
+
+    .command-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
