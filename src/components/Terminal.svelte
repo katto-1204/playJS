@@ -22,27 +22,28 @@
       fontWeight: '800',
       fontWeightBold: '900',
       theme: {
-        background: '#0D0F16',
-        foreground: '#E0E0E0',
+        background: '#0A0A0A',
+        foreground: '#FAFAFA',
         cursor: '#FF6B35',
         cursorAccent: '#FF6B35',
-        selectionBackground: 'rgba(255, 107, 53, 0.3)',
-        black: '#0F111A',
-        red: '#FF6B6B',
-        green: '#FF6B35',
-        yellow: '#FFD93D',
-        blue: '#6BCF7F',
-        magenta: '#C084FC',
-        cyan: '#22D3EE',
-        white: '#E0E0E0',
-        brightBlack: '#4B5563',
-        brightRed: '#FCA5A5',
-        brightGreen: '#FF8C42',
-        brightYellow: '#FDE047',
-        brightBlue: '#93C5FD',
-        brightMagenta: '#E9D5FF',
-        brightCyan: '#A5F3FC',
-        brightWhite: '#F9FAFB',
+        selectionBackground: 'rgba(255, 107, 53, 0.2)',
+        selectionInactiveBackground: 'rgba(255, 107, 53, 0.1)',
+        black: '#0A0A0A',
+        red: '#EF4444',
+        green: '#10B981',
+        yellow: '#F59E0B',
+        blue: '#3B82F6',
+        magenta: '#A855F7',
+        cyan: '#06B6D4',
+        white: '#FAFAFA',
+        brightBlack: '#737373',
+        brightRed: '#F87171',
+        brightGreen: '#34D399',
+        brightYellow: '#FBBF24',
+        brightBlue: '#60A5FA',
+        brightMagenta: '#C084FC',
+        brightCyan: '#22D3EE',
+        brightWhite: '#FFFFFF',
       },
       allowProposedApi: true,
     });
@@ -162,10 +163,11 @@
   .terminal-wrapper {
     width: 100%;
     height: 100%;
-    background-color: #0D0F16;
-    border-radius: 8px;
+    background-color: #0A0A0A;
+    border-radius: 0.5rem;
     overflow: hidden;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    border: 1px solid #262626;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
   }
 
   .terminal-container {

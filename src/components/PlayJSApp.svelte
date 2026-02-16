@@ -4,6 +4,7 @@
   import CodePlayground from './CodePlayground.svelte';
   import LivePreview from './LivePreview.svelte';
   import { CommandProcessor } from '../lib/commands';
+  import { RustCompiler } from '../lib/rustCompiler';
 
   let terminalComponent: any;
   let previewComponent: any;
@@ -11,8 +12,10 @@
   let htmlCode = '<!-- Write your HTML here -->\n<div class="container">\n  <h1>Hello, PlayJS!</h1>\n  <p>Start coding and see the magic happen!</p>\n</div>';
   let cssCode = '/* Write your CSS here */\n.container {\n  text-align: center;\n  padding: 2rem;\n}\n\nh1 {\n  color: #FF6B35;\n  font-size: 2.5rem;\n}';
   let jsCode = '// Write your JavaScript here\nconsole.log("Welcome to PlayJS!");';
+  let rustCode = '// Write your Rust code here\nfn main() {\n    println!("Hello from Rust!");\n}';
 
   const commandProcessor = new CommandProcessor();
+  const rustCompiler = new RustCompiler();
   let showEditor = false;
   let view: 'terminal' | 'editor' | 'split' = 'split';
   let isMobile = false;
@@ -71,7 +74,7 @@
           };
         }
         const name = args.join(' ');
-        const snippet = { html: htmlCode, css: cssCode, js: jsCode };
+        const snippet = { html: htmlCode, css: cssCode, js: jsCode, rust: rustCode };
         localStorage.setItem(`playjs-snippet-${name}`, JSON.stringify(snippet));
         return {
           output: `\x1b[1;33m✓\x1b[0m Snippet "${name}" saved successfully!`,
@@ -104,6 +107,7 @@
           htmlCode = snippet.html || '';
           cssCode = snippet.css || '';
           jsCode = snippet.js || '';
+          rustCode = snippet.rust || '';
           return {
             output: `\x1b[1;33m✓\x1b[0m Snippet "${name}" loaded successfully!`,
             success: true,
@@ -136,6 +140,43 @@
       },
     });
 
+    commandProcessor.register({
+      name: 'rust',
+      description: 'Compile and execute Rust code from the Rust editor tab',
+      usage: '[run]',
+      handler: async (args) => {
+        if (!rustCode || rustCode.trim() === '' || rustCode === '// Write your Rust code here\nfn main() {\n    println!("Hello from Rust!");\n}') {
+          return {
+            output: '\x1b[1;31mError:\x1b[0m No Rust code to execute. Please write some code in the Rust tab.',
+            success: false,
+          };
+        }
+
+        terminalComponent?.writeLine('\x1b[1;36m⟳\x1b[0m Compiling and executing Rust code...\n');
+
+        try {
+          const result = await rustCompiler.execute(rustCode);
+          return {
+            output: rustCompiler.formatExecutionOutput(result),
+            success: result.success,
+          };
+        } catch (error) {
+          return {
+            output: `\x1b[1;31m✗ Error:\x1b[0m ${error instanceof Error ? error.message : 'Unknown error'}`,
+            success: false,
+          };
+        }
+      },
+    });
+
+    commandProcessor.register({
+      name: 'compile',
+      description: 'Compile Rust code (alias for rust command)',
+      handler: async () => {
+        return await commandProcessor.execute('rust', []);
+      },
+    });
+
     // Load saved code from localStorage
     const savedCode = localStorage.getItem('playjs-current-code');
     if (savedCode) {
@@ -144,6 +185,7 @@
         htmlCode = code.html || htmlCode;
         cssCode = code.css || cssCode;
         jsCode = code.js || jsCode;
+        rustCode = code.rust || rustCode;
       } catch {}
     }
 
@@ -164,8 +206,8 @@
     });
   });
 
-  function handleCommand(command: string) {
-    const result = commandProcessor.execute(
+  async function handleCommand(command: string) {
+    const result = await commandProcessor.execute(
       command,
       terminalComponent?.getHistory() || []
     );
@@ -177,15 +219,16 @@
     }
   }
 
-  function handleCodeChange(html: string, css: string, js: string) {
+  function handleCodeChange(html: string, css: string, js: string, rust: string) {
     htmlCode = html;
     cssCode = css;
     jsCode = js;
+    rustCode = rust;
 
     // Auto-save to localStorage
     localStorage.setItem(
       'playjs-current-code',
-      JSON.stringify({ html, css, js })
+      JSON.stringify({ html, css, js, rust })
     );
   }
 </script>
@@ -231,6 +274,7 @@
               {htmlCode}
               {cssCode}
               {jsCode}
+              {rustCode}
               onCodeChange={handleCodeChange}
             />
           </div>
@@ -256,6 +300,7 @@
               {htmlCode}
               {cssCode}
               {jsCode}
+              {rustCode}
               onCodeChange={handleCodeChange}
             />
           </div>
@@ -285,81 +330,90 @@
     display: flex;
     flex-direction: column;
     height: 100vh;
-    background-color: #0F111A;
-    color: #E0E0E0;
-    font-family: 'Inter', sans-serif;
+    background: radial-gradient(ellipse at top, var(--gradient-from), var(--gradient-via) 50%, var(--gradient-to));
+    color: var(--foreground);
+    font-family: var(--font-sans);
   }
 
   .header {
-    padding: 1rem 2rem;
-    background: linear-gradient(135deg, #0F111A 0%, #1a1d29 100%);
-    border-bottom: 2px solid #FF6B35;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    padding: 1.5rem 2rem;
+    background: linear-gradient(135deg, rgba(26, 10, 0, 0.8) 0%, rgba(10, 10, 10, 0.9) 100%);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
   }
 
   .logo {
-    font-size: 1.8rem;
-    font-weight: bold;
-    margin-bottom: 0.25rem;
+    font-size: 2rem;
+    font-weight: 900;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.02em;
   }
 
   .logo-bracket {
-    color: #FF6B35;
+    color: var(--primary);
   }
 
   .logo-text {
-    color: #E0E0E0;
+    color: var(--foreground);
     margin: 0 0.25rem;
   }
 
   .tagline {
-    font-size: 0.9rem;
-    color: #9CA3AF;
+    font-size: 0.9375rem;
+    color: var(--muted-foreground);
     margin-top: 0.25rem;
+    font-weight: 500;
   }
 
   .mobile-nav {
     display: flex;
-    gap: 0.5rem;
-    margin-top: 1rem;
+    gap: 0.75rem;
+    margin-top: 1.25rem;
   }
 
   .nav-btn {
     flex: 1;
-    padding: 0.5rem 1rem;
+    padding: 0.625rem 1.25rem;
     background-color: transparent;
-    border: 1px solid #FF6B35;
-    color: #FF6B35;
-    border-radius: 4px;
+    border: 1px solid var(--border);
+    color: var(--muted-foreground);
+    border-radius: var(--radius);
     cursor: pointer;
-    font-family: 'Inter', sans-serif;
-    font-size: 0.9rem;
-    transition: all 0.2s;
+    font-family: var(--font-sans);
+    font-size: 0.9375rem;
+    font-weight: 600;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .nav-btn:hover {
-    background-color: rgba(255, 107, 53, 0.1);
+    background-color: var(--card);
+    border-color: var(--primary);
+    color: var(--primary);
+    transform: translateY(-1px);
   }
 
   .nav-btn.active {
-    background-color: #FF6B35;
-    color: #0F111A;
+    background-color: var(--primary);
+    color: white;
+    border-color: var(--primary);
+    box-shadow: 0 4px 14px 0 rgba(255, 107, 53, 0.4);
   }
 
   .main-content {
     flex: 1;
     overflow: hidden;
-    padding: 1rem;
+    padding: 1.5rem;
   }
 
   .main-content.mobile {
-    padding: 0.5rem;
+    padding: 0.75rem;
   }
 
   .split-pane {
     display: flex;
     height: 100%;
-    gap: 1rem;
+    gap: 1.5rem;
   }
 
   .pane {
@@ -373,15 +427,37 @@
   }
 
   .divider {
-    width: 2px;
-    background: linear-gradient(to bottom, transparent, #FF6B35, transparent);
+    width: 3px;
+    background: linear-gradient(
+      to bottom,
+      transparent,
+      rgba(255, 107, 53, 0.3),
+      var(--primary),
+      rgba(255, 107, 53, 0.3),
+      transparent
+    );
     cursor: col-resize;
+    border-radius: 9999px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .divider:hover {
+    background: linear-gradient(
+      to bottom,
+      transparent,
+      rgba(255, 107, 53, 0.5),
+      var(--primary),
+      rgba(255, 107, 53, 0.5),
+      transparent
+    );
+    width: 4px;
+    box-shadow: 0 0 20px rgba(255, 107, 53, 0.4);
   }
 
   .editor-pane {
     flex: 1;
     min-width: 0;
-    gap: 1rem;
+    gap: 1.5rem;
   }
 
   .editor-container {
@@ -401,7 +477,7 @@
   .mobile-editor {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 0.75rem;
   }
 
   .mobile-editor-top {
@@ -415,54 +491,63 @@
   }
 
   .footer {
-    padding: 0.75rem 2rem;
-    background-color: #1a1d29;
-    border-top: 1px solid #FF6B35;
-    font-size: 0.85rem;
+    padding: 1rem 2rem;
+    background: linear-gradient(135deg, rgba(26, 10, 0, 0.6) 0%, rgba(10, 10, 10, 0.8) 100%);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid var(--border);
+    font-size: 0.875rem;
   }
 
   .shortcuts {
     display: flex;
-    gap: 2rem;
-    color: #9CA3AF;
+    gap: 2.5rem;
+    color: var(--muted-foreground);
   }
 
   .shortcut-item {
     display: flex;
     align-items: center;
     gap: 0.5rem;
+    font-weight: 500;
   }
 
   kbd {
-    padding: 0.125rem 0.375rem;
-    background-color: #0F111A;
-    border: 1px solid #FF6B35;
-    border-radius: 3px;
+    padding: 0.25rem 0.5rem;
+    background-color: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 0.375rem;
     font-size: 0.75rem;
-    color: #FF6B35;
+    color: var(--primary);
+    font-weight: 600;
+    font-family: var(--font-sans);
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
   }
 
   @media (max-width: 768px) {
     .header {
-      padding: 1rem;
+      padding: 1.25rem 1rem;
     }
 
     .logo {
-      font-size: 1.4rem;
+      font-size: 1.5rem;
     }
 
     .tagline {
-      font-size: 0.75rem;
+      font-size: 0.8125rem;
+    }
+
+    .main-content {
+      padding: 0.75rem;
     }
 
     .footer {
-      padding: 0.5rem 1rem;
-      font-size: 0.7rem;
+      padding: 0.75rem 1rem;
+      font-size: 0.75rem;
     }
 
     .shortcuts {
       flex-direction: column;
-      gap: 0.25rem;
+      gap: 0.5rem;
     }
   }
 </style>

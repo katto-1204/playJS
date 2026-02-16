@@ -15,7 +15,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         <p>
           PlayJS is a browser-based development environment that combines the power of a terminal emulator
           with a live code playground. It's designed for developers who want to quickly experiment with code,
-          test ideas, and build interactive projects without leaving their browser.
+          test ideas, and build interactive projects without leaving their browser. With support for JavaScript,
+          HTML, CSS, and Rust/WebAssembly, PlayJS is your complete browser IDE.
         </p>
       </section>
 
@@ -24,11 +25,15 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         <ul class="feature-list">
           <li>
             <strong>Terminal Emulator:</strong> A fully functional terminal powered by xterm.js with command
-            history, custom commands, and a beautiful dark theme with neon green accents.
+            history, custom commands, and a beautiful dark theme with orange accents.
           </li>
           <li>
-            <strong>Code Playground:</strong> Write HTML, CSS, and JavaScript with syntax highlighting using
+            <strong>Code Playground:</strong> Write HTML, CSS, JavaScript, and Rust with syntax highlighting using
             CodeMirror 6. See your changes reflected instantly in the live preview pane.
+          </li>
+          <li>
+            <strong>Rust/WASM Support:</strong> Full support for Rust code with syntax highlighting, ready for
+            WebAssembly compilation and execution in the browser.
           </li>
           <li>
             <strong>Command Integration:</strong> Control your code execution directly from the terminal using
@@ -84,6 +89,14 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             <code class="command-name">snippets</code>
             <p>List all your saved code snippets.</p>
           </div>
+          <div class="command-card">
+            <code class="command-name">rust</code>
+            <p>Compile and execute Rust code from the Rust editor tab using the Rust Playground API.</p>
+          </div>
+          <div class="command-card">
+            <code class="command-name">compile</code>
+            <p>Alias for the rust command - compiles and executes your Rust code.</p>
+          </div>
         </div>
       </section>
 
@@ -95,6 +108,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           <li><strong>xterm.js:</strong> Full-featured terminal emulator for the browser</li>
           <li><strong>CodeMirror 6:</strong> Modern code editor with syntax highlighting</li>
           <li><strong>TypeScript:</strong> Type-safe development experience</li>
+          <li><strong>WebAssembly:</strong> High-performance execution of Rust code in the browser</li>
         </ul>
       </section>
 
@@ -109,55 +123,66 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 <style>
   .about-page {
     min-height: 100vh;
-    background-color: #0F111A;
-    color: #E0E0E0;
+    background: radial-gradient(ellipse at top, var(--gradient-from), var(--gradient-via) 50%, var(--gradient-to));
+    color: var(--foreground);
     overflow-y: auto;
   }
 
   .page-header {
-    padding: 2rem;
-    background: linear-gradient(135deg, #0F111A 0%, #1a1d29 100%);
-    border-bottom: 2px solid #FF6B35;
+    padding: 2.5rem 2rem;
+    background: linear-gradient(135deg, rgba(26, 10, 0, 0.8) 0%, rgba(10, 10, 10, 0.9) 100%);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
   }
 
   .back-link {
     display: inline-block;
-    color: #FF6B35;
+    color: var(--primary);
     text-decoration: none;
-    margin-bottom: 1rem;
-    transition: opacity 0.2s;
+    margin-bottom: 1.25rem;
+    font-weight: 600;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .back-link:hover {
-    opacity: 0.7;
+    opacity: 0.8;
+    transform: translateX(-4px);
   }
 
   .page-header h1 {
-    font-size: 2.5rem;
-    color: #FF6B35;
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 900;
+    letter-spacing: -0.02em;
     margin: 0;
+    background: linear-gradient(135deg, var(--primary) 0%, #FFA366 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
 
   .content {
-    max-width: 900px;
+    max-width: 1000px;
     margin: 0 auto;
-    padding: 3rem 2rem;
+    padding: 4rem 2rem;
   }
 
   .section {
-    margin-bottom: 3rem;
+    margin-bottom: 4rem;
   }
 
   .section h2 {
-    color: #FF6B35;
-    font-size: 1.8rem;
-    margin-bottom: 1rem;
+    color: var(--primary);
+    font-size: 2rem;
+    font-weight: 800;
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.01em;
   }
 
   .section p {
-    color: #9CA3AF;
+    color: var(--muted-foreground);
     line-height: 1.8;
-    font-size: 1.05rem;
+    font-size: 1.0625rem;
   }
 
   .feature-list,
@@ -168,97 +193,139 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
   .feature-list li,
   .tech-list li {
-    background-color: #1a1d29;
-    padding: 1rem 1.5rem;
+    background: linear-gradient(135deg, rgba(26, 10, 0, 0.4) 0%, rgba(10, 10, 10, 0.6) 100%);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--border);
+    padding: 1.5rem;
     margin-bottom: 1rem;
-    border-radius: 8px;
-    border-left: 4px solid #FF6B35;
-    color: #9CA3AF;
-    line-height: 1.6;
+    border-radius: var(--radius);
+    border-left: 3px solid var(--primary);
+    color: var(--muted-foreground);
+    line-height: 1.7;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .feature-list li:hover,
+  .tech-list li:hover {
+    border-color: var(--primary);
+    background: linear-gradient(135deg, rgba(26, 10, 0, 0.6) 0%, rgba(10, 10, 10, 0.8) 100%);
+    transform: translateX(4px);
+    box-shadow: 0 4px 20px rgba(255, 107, 53, 0.2);
   }
 
   .feature-list strong,
   .tech-list strong {
-    color: #FF6B35;
+    color: var(--primary);
+    font-weight: 700;
   }
 
   .feature-list code {
-    background-color: #0F111A;
-    padding: 0.2rem 0.5rem;
-    border-radius: 4px;
-    color: #FF6B35;
-    font-family: 'Fira Code', 'JetBrains Mono', monospace;
+    background-color: var(--card);
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.375rem;
+    color: var(--primary);
+    font-family: var(--font-sans);
+    font-weight: 600;
+    border: 1px solid var(--border);
   }
 
   .command-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 1rem;
+    gap: 1.25rem;
   }
 
   .command-card {
-    background-color: #1a1d29;
-    padding: 1.5rem;
-    border-radius: 8px;
-    border: 2px solid transparent;
-    transition: all 0.3s;
+    background: linear-gradient(135deg, rgba(26, 10, 0, 0.4) 0%, rgba(10, 10, 10, 0.6) 100%);
+    backdrop-filter: blur(10px);
+    padding: 1.75rem;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .command-card:hover {
-    border-color: #FF6B35;
-    box-shadow: 0 0 20px rgba(255, 107, 53, 0.2);
+    border-color: var(--primary);
+    box-shadow: 0 8px 30px rgba(255, 107, 53, 0.3);
+    transform: translateY(-4px);
   }
 
   .command-name {
     display: block;
-    color: #FF6B35;
-    font-family: 'Fira Code', 'JetBrains Mono', monospace;
-    font-size: 1.1rem;
-    font-weight: 600;
-    margin-bottom: 0.5rem;
+    color: var(--primary);
+    font-family: var(--font-sans);
+    font-size: 1.125rem;
+    font-weight: 800;
+    margin-bottom: 0.75rem;
   }
 
   .command-card p {
     margin: 0;
-    font-size: 0.95rem;
+    font-size: 0.9375rem;
+    color: var(--muted-foreground);
   }
 
   .cta-section {
     text-align: center;
-    padding: 3rem 0;
+    padding: 4rem 0;
+  }
+
+  .cta-section h2 {
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
   }
 
   .cta-button {
     display: inline-block;
-    padding: 1rem 2rem;
-    font-size: 1.1rem;
-    font-weight: 600;
-    background-color: #FF6B35;
-    color: #0F111A;
-    border: 2px solid #FF6B35;
-    border-radius: 8px;
+    padding: 1.25rem 2.5rem;
+    font-size: 1.125rem;
+    font-weight: 700;
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: var(--radius);
     text-decoration: none;
-    transition: all 0.3s;
-    font-family: 'Fira Code', 'JetBrains Mono', monospace;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    font-family: var(--font-sans);
+    box-shadow: 0 4px 14px 0 rgba(255, 107, 53, 0.4);
   }
 
   .cta-button:hover {
-    background-color: transparent;
-    color: #FF6B35;
-    box-shadow: 0 0 20px rgba(255, 107, 53, 0.5);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px 0 rgba(255, 107, 53, 0.5);
   }
 
   @media (max-width: 768px) {
+    .page-header {
+      padding: 2rem 1.5rem;
+    }
+
     .page-header h1 {
       font-size: 2rem;
     }
 
+    .content {
+      padding: 3rem 1.5rem;
+    }
+
+    .section {
+      margin-bottom: 3rem;
+    }
+
     .section h2 {
-      font-size: 1.5rem;
+      font-size: 1.75rem;
     }
 
     .command-grid {
       grid-template-columns: 1fr;
+    }
+
+    .cta-section h2 {
+      font-size: 2rem;
+    }
+
+    .cta-button {
+      padding: 1rem 2rem;
     }
   }
 </style>

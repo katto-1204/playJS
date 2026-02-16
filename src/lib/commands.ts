@@ -7,7 +7,7 @@ export interface Command {
   name: string;
   description: string;
   usage?: string;
-  handler: (args: string[]) => CommandResult;
+  handler: (args: string[]) => CommandResult | Promise<CommandResult>;
 }
 
 export class CommandProcessor {
@@ -95,7 +95,7 @@ export class CommandProcessor {
     this.commands.set(command.name, command);
   }
 
-  execute(input: string, history: string[] = []): CommandResult {
+  async execute(input: string, history: string[] = []): Promise<CommandResult> {
     const parts = input.trim().split(/\s+/);
     const commandName = parts[0].toLowerCase();
     const args = parts.slice(1);
@@ -118,7 +118,14 @@ export class CommandProcessor {
         return { output: output || 'No commands in history yet.', success: true };
       }
 
-      return command.handler(args);
+      const result = command.handler(args);
+
+      // Check if result is a promise
+      if (result instanceof Promise) {
+        return await result;
+      }
+
+      return result;
     } catch (error) {
       return {
         output: `\x1b[1;31mError executing command:\x1b[0m ${error instanceof Error ? error.message : String(error)}`,

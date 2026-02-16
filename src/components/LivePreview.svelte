@@ -116,10 +116,11 @@
     flex-direction: column;
     height: 100%;
     width: 100%;
-    background-color: #0F111A;
-    border-radius: 8px;
+    background-color: #0A0A0A;
+    border-radius: 0.5rem;
     overflow: hidden;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    border: 1px solid #262626;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
   }
 
   .preview-header {
@@ -127,30 +128,33 @@
     justify-content: space-between;
     align-items: center;
     padding: 0.75rem 1rem;
-    background-color: #1a1d29;
-    border-bottom: 2px solid #FF6B35;
+    background-color: #151515;
+    border-bottom: 1px solid #262626;
   }
 
   .preview-title {
     font-family: 'Inter', sans-serif;
-    font-size: 0.9rem;
+    font-size: 0.875rem;
     font-weight: 600;
-    color: #FF6B35;
+    color: #FAFAFA;
   }
 
   .refresh-btn {
     background-color: transparent;
-    border: 1px solid #FF6B35;
-    color: #FF6B35;
-    padding: 0.25rem 0.75rem;
-    border-radius: 4px;
+    border: 1px solid #262626;
+    color: #A1A1A1;
+    padding: 0.375rem 0.75rem;
+    border-radius: 0.375rem;
     cursor: pointer;
-    font-size: 1.2rem;
-    transition: all 0.2s;
+    font-size: 1.125rem;
+    transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+    font-weight: 600;
   }
 
   .refresh-btn:hover {
-    background-color: rgba(255, 107, 53, 0.1);
+    background-color: #1A1A1A;
+    border-color: #FF6B35;
+    color: #FF6B35;
   }
 
   .preview-iframe {

@@ -6,9 +6,10 @@
   import { html } from '@codemirror/lang-html';
   import { css } from '@codemirror/lang-css';
   import { javascript } from '@codemirror/lang-javascript';
+  import { rust } from '@codemirror/lang-rust';
 
   export let value = '';
-  export let language: 'html' | 'css' | 'javascript' = 'html';
+  export let language: 'html' | 'css' | 'javascript' | 'rust' = 'html';
   export let onChange: (value: string) => void = () => {};
 
   let editorContainer: HTMLDivElement;
@@ -18,6 +19,7 @@
     html: html(),
     css: css(),
     javascript: javascript(),
+    rust: rust(),
   };
 
   onMount(() => {

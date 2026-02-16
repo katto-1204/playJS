@@ -4,24 +4,30 @@
   export let htmlCode = '';
   export let cssCode = '';
   export let jsCode = '';
-  export let onCodeChange: (html: string, css: string, js: string) => void = () => {};
+  export let rustCode = '';
+  export let onCodeChange: (html: string, css: string, js: string, rust: string) => void = () => {};
 
-  type Tab = 'html' | 'css' | 'javascript';
+  type Tab = 'html' | 'css' | 'javascript' | 'rust';
   let activeTab: Tab = 'html';
 
   function handleHtmlChange(value: string) {
     htmlCode = value;
-    onCodeChange(htmlCode, cssCode, jsCode);
+    onCodeChange(htmlCode, cssCode, jsCode, rustCode);
   }
 
   function handleCssChange(value: string) {
     cssCode = value;
-    onCodeChange(htmlCode, cssCode, jsCode);
+    onCodeChange(htmlCode, cssCode, jsCode, rustCode);
   }
 
   function handleJsChange(value: string) {
     jsCode = value;
-    onCodeChange(htmlCode, cssCode, jsCode);
+    onCodeChange(htmlCode, cssCode, jsCode, rustCode);
+  }
+
+  function handleRustChange(value: string) {
+    rustCode = value;
+    onCodeChange(htmlCode, cssCode, jsCode, rustCode);
   }
 </script>
 
@@ -48,6 +54,13 @@
     >
       JavaScript
     </button>
+    <button
+      class="tab"
+      class:active={activeTab === 'rust'}
+      on:click={() => (activeTab = 'rust')}
+    >
+      Rust/WASM
+    </button>
   </div>
 
   <div class="editor-area">
@@ -69,6 +82,12 @@
         language="javascript"
         onChange={handleJsChange}
       />
+    {:else if activeTab === 'rust'}
+      <CodeEditor
+        value={rustCode}
+        language="rust"
+        onChange={handleRustChange}
+      />
     {/if}
   </div>
 </div>
@@ -79,52 +98,52 @@
     flex-direction: column;
     height: 100%;
     width: 100%;
-    background-color: #0F111A;
-    border-radius: 8px;
+    background-color: #0A0A0A;
+    border-radius: 0.5rem;
     overflow: hidden;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    border: 1px solid #262626;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
   }
 
   .tabs {
     display: flex;
-    background-color: #1a1d29;
-    border-bottom: 2px solid #FF6B35;
-    padding: 0.5rem 1rem 0 1rem;
-    gap: 0.5rem;
+    background-color: #151515;
+    border-bottom: 1px solid #262626;
+    padding: 0 1rem;
+    gap: 0.25rem;
   }
 
   .tab {
-    padding: 0.5rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
     background-color: transparent;
     border: none;
-    color: #9CA3AF;
+    color: #A1A1A1;
     font-family: 'Inter', sans-serif;
-    font-size: 0.9rem;
+    font-size: 0.875rem;
     font-weight: 500;
     cursor: pointer;
-    border-radius: 6px 6px 0 0;
-    transition: all 0.2s;
+    border-radius: 0;
+    transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
+    border-bottom: 2px solid transparent;
+  }
+
+  .tab-icon {
+    font-size: 1rem;
   }
 
   .tab:hover {
-    background-color: rgba(255, 107, 53, 0.1);
-    color: #E0E0E0;
+    background-color: #1A1A1A;
+    color: #FAFAFA;
   }
 
   .tab.active {
-    background-color: #0F111A;
+    background-color: transparent;
     color: #FF6B35;
-  }
-
-  .tab.active::after {
-    content: '';
-    position: absolute;
-    bottom: -2px;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background-color: #FF6B35;
+    border-bottom-color: #FF6B35;
   }
 
   .editor-area {
