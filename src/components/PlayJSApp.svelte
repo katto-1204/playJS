@@ -5,6 +5,7 @@
   import LivePreview from './LivePreview.svelte';
   import { CommandProcessor } from '../lib/commands';
   import { RustCompiler } from '../lib/rustCompiler';
+  import { Calculator } from '../lib/calculator';
 
   let terminalComponent: any;
   let previewComponent: any;
@@ -16,6 +17,7 @@
 
   const commandProcessor = new CommandProcessor();
   const rustCompiler = new RustCompiler();
+  const calculator = new Calculator();
   let showEditor = false;
   let view: 'terminal' | 'editor' | 'split' = 'split';
   let isMobile = false;
@@ -174,6 +176,74 @@
       description: 'Compile Rust code (alias for rust command)',
       handler: async () => {
         return await commandProcessor.execute('rust', []);
+      },
+    });
+
+    // Calculator commands
+    commandProcessor.register({
+      name: 'calc',
+      description: 'Perform mathematical calculations',
+      usage: '<expression> | memory | history | clear',
+      handler: (args) => {
+        if (args.length === 0) {
+          return {
+            output: '\x1b[1;33mUsage:\x1b[0m calc <expression>\n\n' +
+                    'Examples:\n' +
+                    '  calc 2 + 2\n' +
+                    '  calc 10 * 5 + 3\n' +
+                    '  calc (15 + 5) / 2\n' +
+                    '  calc 2 ^ 8\n' +
+                    '  calc 17 % 5\n\n' +
+                    'Commands:\n' +
+                    '  calc memory   - Show current memory value\n' +
+                    '  calc history  - Show calculation history\n' +
+                    '  calc clear    - Clear memory and history',
+            success: true,
+          };
+        }
+
+        const command = args[0].toLowerCase();
+
+        // Handle subcommands
+        if (command === 'memory') {
+          const memory = calculator.getMemory();
+          return {
+            output: `\x1b[1;36mMemory:\x1b[0m ${memory}`,
+            success: true,
+          };
+        }
+
+        if (command === 'history') {
+          return {
+            output: calculator.formatHistory(),
+            success: true,
+          };
+        }
+
+        if (command === 'clear') {
+          calculator.clearAll();
+          return {
+            output: '\x1b[1;33m✓\x1b[0m Calculator memory and history cleared',
+            success: true,
+          };
+        }
+
+        // Perform calculation
+        const expression = args.join(' ');
+        const result = calculator.calculate(expression);
+
+        return {
+          output: calculator.formatResult(result),
+          success: result.success,
+        };
+      },
+    });
+
+    commandProcessor.register({
+      name: 'calculate',
+      description: 'Alias for calc command',
+      handler: (args) => {
+        return commandProcessor.execute('calc ' + args.join(' '), []);
       },
     });
 

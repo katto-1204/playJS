@@ -36,6 +36,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             WebAssembly compilation and execution in the browser.
           </li>
           <li>
+            <strong>Built-in Calculator:</strong> Perform complex mathematical calculations directly in the terminal
+            with support for arithmetic operations, exponentiation, modulo, and calculation history.
+          </li>
+          <li>
             <strong>Command Integration:</strong> Control your code execution directly from the terminal using
             commands like <code>run preview</code>, <code>save</code>, and <code>load</code>.
           </li>
@@ -96,6 +100,22 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           <div class="command-card">
             <code class="command-name">compile</code>
             <p>Alias for the rust command - compiles and executes your Rust code.</p>
+          </div>
+          <div class="command-card">
+            <code class="command-name">calc &lt;expression&gt;</code>
+            <p>Perform mathematical calculations. Supports +, -, *, /, ^ (power), % (modulo), and parentheses.</p>
+          </div>
+          <div class="command-card">
+            <code class="command-name">calc memory</code>
+            <p>Display the current calculator memory value (last result).</p>
+          </div>
+          <div class="command-card">
+            <code class="command-name">calc history</code>
+            <p>Show your calculation history with all previous calculations.</p>
+          </div>
+          <div class="command-card">
+            <code class="command-name">calc clear</code>
+            <p>Clear calculator memory and history.</p>
           </div>
         </div>
       </section>
