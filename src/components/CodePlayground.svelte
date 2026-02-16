@@ -121,18 +121,14 @@
     background-color: transparent;
     border: none;
     color: #A1A1A1;
-    font-family: 'Inter', sans-serif;
+    font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
     font-size: 0.875rem;
-    font-weight: 500;
+    font-weight: 600;
     cursor: pointer;
     border-radius: 0;
     transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
     border-bottom: 2px solid transparent;
-  }
-
-  .tab-icon {
-    font-size: 1rem;
   }
 
   .tab:hover {

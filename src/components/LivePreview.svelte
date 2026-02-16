@@ -133,7 +133,7 @@
   }
 
   .preview-title {
-    font-family: 'Inter', sans-serif;
+    font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
     font-size: 0.875rem;
     font-weight: 600;
     color: #FAFAFA;
@@ -149,6 +149,7 @@
     font-size: 1.125rem;
     transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
     font-weight: 600;
+    font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
   }
 
   .refresh-btn:hover {

@@ -241,6 +241,31 @@
       <span class="logo-bracket">/&gt;</span>
     </div>
     <div class="tagline">Type. Run. Experiment. All in the Browser.</div>
+
+    <div class="view-toggle">
+      <button
+        class="toggle-btn"
+        class:active={view === 'terminal'}
+        on:click={() => (view = 'terminal')}
+      >
+        Terminal
+      </button>
+      <button
+        class="toggle-btn"
+        class:active={view === 'editor'}
+        on:click={() => (view = 'editor')}
+      >
+        Editor
+      </button>
+      <button
+        class="toggle-btn"
+        class:active={view === 'split'}
+        on:click={() => (view = 'split')}
+      >
+        Split
+      </button>
+    </div>
+
     {#if isMobile}
       <div class="mobile-nav">
         <button
@@ -262,7 +287,7 @@
   </header>
 
   <main class="main-content" class:mobile={isMobile}>
-    {#if !isMobile && view === 'split'}
+    {#if view === 'split' && !isMobile}
       <div class="split-pane">
         <div class="pane terminal-pane">
           <Terminal bind:this={terminalComponent} onCommand={handleCommand} />
@@ -286,6 +311,30 @@
               {jsCode}
             />
           </div>
+        </div>
+      </div>
+    {:else if view === 'terminal'}
+      <div class="single-view">
+        <Terminal bind:this={terminalComponent} onCommand={handleCommand} />
+      </div>
+    {:else if view === 'editor'}
+      <div class="single-view editor-only">
+        <div class="editor-container">
+          <CodePlayground
+            {htmlCode}
+            {cssCode}
+            {jsCode}
+            {rustCode}
+            onCodeChange={handleCodeChange}
+          />
+        </div>
+        <div class="preview-container">
+          <LivePreview
+            bind:this={previewComponent}
+            {htmlCode}
+            {cssCode}
+            {jsCode}
+          />
         </div>
       </div>
     {:else if isMobile}
@@ -348,6 +397,7 @@
     font-weight: 900;
     margin-bottom: 0.5rem;
     letter-spacing: -0.02em;
+    font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
   }
 
   .logo-bracket {
@@ -364,6 +414,46 @@
     color: var(--muted-foreground);
     margin-top: 0.25rem;
     font-weight: 500;
+    font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+  }
+
+  .view-toggle {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1.25rem;
+  }
+
+  @media (max-width: 768px) {
+    .view-toggle {
+      display: none;
+    }
+  }
+
+  .toggle-btn {
+    padding: 0.5rem 1rem;
+    background-color: transparent;
+    border: 1px solid var(--border);
+    color: var(--muted-foreground);
+    border-radius: var(--radius);
+    cursor: pointer;
+    font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+    font-size: 0.875rem;
+    font-weight: 600;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .toggle-btn:hover {
+    background-color: var(--card);
+    border-color: var(--primary);
+    color: var(--primary);
+    transform: translateY(-1px);
+  }
+
+  .toggle-btn.active {
+    background-color: var(--primary);
+    color: white;
+    border-color: var(--primary);
+    box-shadow: 0 4px 14px 0 rgba(255, 107, 53, 0.4);
   }
 
   .mobile-nav {
@@ -380,7 +470,7 @@
     color: var(--muted-foreground);
     border-radius: var(--radius);
     cursor: pointer;
-    font-family: var(--font-sans);
+    font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
     font-size: 0.9375rem;
     font-weight: 600;
     transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
@@ -470,6 +560,27 @@
     min-height: 0;
   }
 
+  .single-view {
+    height: 100%;
+    width: 100%;
+  }
+
+  .single-view.editor-only {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .single-view.editor-only .editor-container {
+    flex: 1;
+    min-height: 0;
+  }
+
+  .single-view.editor-only .preview-container {
+    flex: 1;
+    min-height: 0;
+  }
+
   .mobile-view {
     height: 100%;
   }
@@ -509,6 +620,7 @@
     align-items: center;
     gap: 0.5rem;
     font-weight: 500;
+    font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
   }
 
   kbd {
@@ -519,7 +631,7 @@
     font-size: 0.75rem;
     color: var(--primary);
     font-weight: 600;
-    font-family: var(--font-sans);
+    font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
   }
 

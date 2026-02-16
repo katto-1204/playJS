@@ -63,17 +63,17 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       <div class="container">
         <div class="features-grid">
           <div class="feature">
-            <div class="feature-icon">⚡</div>
+            <div class="feature-icon">[FAST]</div>
             <h3>Lightning Fast</h3>
             <p>Instant feedback with hot reload and real-time preview. No waiting, just coding.</p>
           </div>
           <div class="feature">
-            <div class="feature-icon">🦀</div>
+            <div class="feature-icon">[RUST]</div>
             <h3>Rust/WASM Ready</h3>
             <p>Compile and run Rust code directly in the browser with WebAssembly support.</p>
           </div>
           <div class="feature">
-            <div class="feature-icon">💾</div>
+            <div class="feature-icon">[SAVE]</div>
             <h3>Save & Share</h3>
             <p>Persist your work locally and share projects with a simple command.</p>
           </div>
@@ -139,6 +139,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     line-height: 1.1;
     margin-bottom: 1.5rem;
     letter-spacing: -0.02em;
+    font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
   }
 
   .gradient-text {
@@ -175,6 +176,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     font-size: 1.0625rem;
     text-decoration: none;
     transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
   }
 
   .btn-primary {
@@ -309,9 +311,11 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   }
 
   .feature-icon {
-    font-size: 3rem;
+    font-size: 2rem;
     margin-bottom: 1rem;
-    filter: grayscale(0.2);
+    color: var(--primary);
+    font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+    font-weight: 800;
   }
 
   .feature h3 {
@@ -319,6 +323,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     font-weight: 700;
     margin-bottom: 0.75rem;
     color: var(--foreground);
+    font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
   }
 
   .feature p {
