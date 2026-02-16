@@ -319,6 +319,14 @@
       </div>
     {:else if view === 'editor'}
       <div class="single-view editor-only">
+        <div class="preview-container">
+          <LivePreview
+            bind:this={previewComponent}
+            {htmlCode}
+            {cssCode}
+            {jsCode}
+          />
+        </div>
         <div class="editor-container">
           <CodePlayground
             {htmlCode}
@@ -326,14 +334,6 @@
             {jsCode}
             {rustCode}
             onCodeChange={handleCodeChange}
-          />
-        </div>
-        <div class="preview-container">
-          <LivePreview
-            bind:this={previewComponent}
-            {htmlCode}
-            {cssCode}
-            {jsCode}
           />
         </div>
       </div>
@@ -345,20 +345,20 @@
       {:else if view === 'editor'}
         <div class="mobile-view mobile-editor">
           <div class="mobile-editor-top">
+            <LivePreview
+              bind:this={previewComponent}
+              {htmlCode}
+              {cssCode}
+              {jsCode}
+            />
+          </div>
+          <div class="mobile-editor-bottom">
             <CodePlayground
               {htmlCode}
               {cssCode}
               {jsCode}
               {rustCode}
               onCodeChange={handleCodeChange}
-            />
-          </div>
-          <div class="mobile-editor-bottom">
-            <LivePreview
-              bind:this={previewComponent}
-              {htmlCode}
-              {cssCode}
-              {jsCode}
             />
           </div>
         </div>
@@ -567,18 +567,20 @@
 
   .single-view.editor-only {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     gap: 1.5rem;
   }
 
   .single-view.editor-only .editor-container {
     flex: 1;
     min-height: 0;
+    min-width: 0;
   }
 
   .single-view.editor-only .preview-container {
     flex: 1;
     min-height: 0;
+    min-width: 0;
   }
 
   .mobile-view {

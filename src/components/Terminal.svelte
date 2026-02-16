@@ -17,10 +17,10 @@
     terminal = new Terminal({
       cursorBlink: true,
       cursorStyle: 'block',
-      fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, sans-serif',
+      fontFamily: "'JetBrains Mono', 'Fira Code', 'Courier New', monospace",
       fontSize: 15,
-      fontWeight: '800',
-      fontWeightBold: '900',
+      fontWeight: '400',
+      fontWeightBold: '700',
       theme: {
         background: '#0A0A0A',
         foreground: '#FAFAFA',

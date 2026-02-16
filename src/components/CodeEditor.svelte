@@ -39,17 +39,17 @@
           '&': {
             height: '100%',
             fontSize: '15px',
-            fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, sans-serif',
-            fontWeight: '800',
+            fontFamily: "'JetBrains Mono', 'Fira Code', 'Courier New', monospace",
+            fontWeight: '400',
           },
           '.cm-scroller': {
             overflow: 'auto',
-            fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, sans-serif',
-            fontWeight: '800',
+            fontFamily: "'JetBrains Mono', 'Fira Code', 'Courier New', monospace",
+            fontWeight: '400',
           },
           '.cm-content': {
-            fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, sans-serif',
-            fontWeight: '800',
+            fontFamily: "'JetBrains Mono', 'Fira Code', 'Courier New', monospace",
+            fontWeight: '400',
           },
         }),
       ],
